@@ -5,6 +5,8 @@ Description: Some tools for generating R code to be compiled via RLLVMCompile an
  This does not compile the code, but generates code that can be compiled.
  It is for a) generating code for particular tasks that we want to compile, and 
     b) rewriting of R code to make the code more amenable to compulation
+ The functions here are currently quite specialized and are illustrations of things we can 
+ speed up when we compile code.
 Author: Duncan Temple Lang
 Maintainer: Duncan Temple Lang <duncan@r-project.org>
 License: BSD_3_clause + file LICENSE
