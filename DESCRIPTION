@@ -1,0 +1,12 @@
+Package: RCompileIdioms
+Title: Tools for creating code for compilation
+Version: 0.1-0
+Description: Some tools for generating R code to be compiled via RLLVMCompile and Rllvm.
+ This does not compile the code, but generates code that can be compiled.
+ It is for a) generating code for particular tasks that we want to compile, and 
+    b) rewriting of R code to make the code more amenable to compulation
+Author: Duncan Temple Lang
+Maintainer: Duncan Temple Lang <duncan@r-project.org>
+License: BSD_3_clause + file LICENSE
+
+
