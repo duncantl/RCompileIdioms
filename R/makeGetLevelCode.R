@@ -17,7 +17,12 @@ if(FALSE) {
 
 
    # Compile for generatinc LLVM compiled code. First parameter is the string and no need for strsplit().
-  f = genGetLevel(c("albert", "bob", "boy", "jane", "jill", "xavier", "zoe"), forR = FALSE) 
+  f = genGetLevel(c("albert", "bob", "boy", "jane", "jill", "xavier", "zoe"), forR = FALSE)
+
+
+ # Note fails on this.  Asks if 4 element is "" for bob
+  f = genGetLevel(c("bob", "bobby", "boy"))
+ 
 }
 
 genGetLevel =
