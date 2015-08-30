@@ -32,11 +32,16 @@ function(x, file = stdout(), ...)
   writeCode(x$routines(), file, ...)
 
 
-SupportRoutinesFile = "~/Books/CompilerTechnologiesInR/CaseStudies/wikipedia/xmlValue_GetAttr.c"
+
 
 writeCode.RoutineList = 
-function(x, file = stdout(), ...)
+function(x, file = stdout(), SupportRoutinesFile = system.file("Ccode", "xmlValue_GetAttr.c", package = "RCompileIdioms"),
+          makevars = system.file("Make/", "akevars", package = "RCompileIdioms"), ...)
 {
+  mk = file.path(dirname(file), "Makevars")
+  if(!file.exists(mk))
+      file.copy(makevars, mk)
+  
   code = sapply(x, formatRoutine)
   cat("#include <Rdefines.h>",
       "#include <R_ext/Arith.h>",
@@ -60,9 +65,9 @@ genXMLSchemaCCode =
     #
     # for a given XML element name, generate the code to read the contents of the node into a list.
     #
-    #  genXMLCCode(s[[1]]$PageType, s)
+    #  genXMLSchemaCCode(s[[1]]$PageType, s)
     #
-function(desc, schema, ignore = c(), collector = genCollector())
+function(desc, schema, collector = genCollector())
 {
     rname = paste0("R_mk_", desc@name)
     if(collector$hasRoutine(rname))
@@ -93,7 +98,11 @@ function(desc, schema, ignore = c(), collector = genCollector())
       "}")
 
     collector$addRoutine(code, rname)
-    code
+
+    rrname = sprintf("R_%s", desc@name)
+    collector$addRoutine(sprintf("SEXP %s(SEXP r_node) { xmlNodePtr node = (xmlNodePtr) R_ExternalPtrAddr(r_node); return(%s(node));}", rrname, rname), rrname)
+    
+    collector
 }
 
 ##################################################################################
@@ -176,7 +185,7 @@ setMethod("convertValueToR", "ClassDefinition",
           function(el, varName, schema, collector, targetVar = "val") {
                rname = sprintf("R_mk_%s", el@name)
                if(!collector$hasRoutine(rname))
-                  collector$addRoutine(genXMLCCode(el, schema, collector = collector), rname)
+                  collector$addRoutine(genXMLSchemaCCode(el, schema, collector = collector), rname)
                
                sprintf("%s(%s)", rname, varName)
           })
