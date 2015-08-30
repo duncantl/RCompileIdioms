@@ -1,0 +1,2 @@
+PKG_CPPFLAGS=$(shell xml2-config --cflags)
+PKG_LIBS=$(shell xml2-config --libs)
