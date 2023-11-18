@@ -11,7 +11,6 @@ function(id = NA)
    routines = list()
    structure(list(routines = function() structure(routines, class = "RoutineList"),
                   addRoutine = function(r, name) {
-                      if(grepl("\\.", name)) recover()
                       routines[[name]] <<- r
                     },
                   hasRoutine = function(name) name %in% names(routines)),
@@ -185,7 +184,7 @@ setMethod("convertValueToR", "ClassDefinition",
           function(el, varName, schema, collector, targetVar = "val") {
                rname = sprintf("R_mk_%s", el@name)
                if(!collector$hasRoutine(rname))
-                  collector$addRoutine(genXMLSchemaCCode(el, schema, collector = collector), rname)
+                  genXMLSchemaCCode(el, schema, collector = collector)
                
                sprintf("%s(%s)", rname, varName)
           })
