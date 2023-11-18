@@ -124,7 +124,9 @@ function(funName = "readCSV", ..., colClasses = list(...), header = NA)
       open,
       fgets,
       "int n = INTEGER(r_num)[0];",
-      txt, txt1, txt2, txt3, txt4, txt5, txt6, loopBody, txt7, makeDf, 
+      txt, txt1, txt2, txt3, txt4, txt5, txt6, loopBody, txt7,
+      "fclose(con);",
+      makeDf, 
       sprintf("UNPROTECT(%d);", length(colClasses) + 1L),
       "return(ans);",
       "}")
